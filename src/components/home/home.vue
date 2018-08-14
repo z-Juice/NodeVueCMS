@@ -1,13 +1,7 @@
 <template>
     <div class="mui-content">
         <!--轮播图-->
-        <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="item in banner">
-                <a :href="item.url">
-                    <img :src="item.img" alt="">
-                </a>
-            </mt-swipe-item>
-        </mt-swipe>
+        <slider :imgUrl="imgUrl"></slider>
         
         <!--九宫格-->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -22,26 +16,22 @@
 </template>
 
 <script>
+    //导入轮播图组件
+    import slider from '../subcom/slider.vue';
+    
     //导出组件
     export default {
         data() {
             return {
-                banner: [],
-                menu: []
+                menu: [],
+                imgUrl: ''
             }
         },
         created() {
-            this.getlunbo();
+            this.imgUrl = this.api.apiHost + "/api/getlunbo";
             this.getmenu();
         },
         methods: {
-            //获取轮播
-            getlunbo(){
-                let url = this.api.apiHost + "/api/getlunbo";
-                this.$http.get(url).then( (response) => {
-                    this.banner = response.body.message;
-                })
-            },
             //获取九宫格
             getmenu(){
                 let url = this.api.apiHost + "/api/getmenus";
@@ -51,6 +41,9 @@
                     
                 })
             }
+        },
+        components: {
+            slider: slider
         }
     }
 </script>
@@ -95,13 +88,4 @@
         background-color: #fff;
     }
     
-    /*  轮播图的样式 */
-    .mint-swipe  {
-        height: 250px;
-    }
-
-    .mint-swipe img {
-        width: 100%;
-        height: 100%;
-    }
 </style>

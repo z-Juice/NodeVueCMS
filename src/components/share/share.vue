@@ -3,10 +3,10 @@
         <div class="title">
             <ul :style="ulWidth">
                 <li>
-                    <a @click="getimages(-1)" href="javascript">全部</a>
+                    <a @click="getimages(-1)" href="javascript:;">全部</a>
                 </li>
                 <li v-for="item in menus" :key="item.id">
-                    <a @click="getimages(item.id)" href="javascript">{{item.title}}</a>
+                    <a @click="getimages(item.id)" href="javascript:;">{{item.title}}</a>
                 </li>
             </ul>
         </div>

@@ -6,21 +6,10 @@
         </div>
 
         <ul class="mui-table-view mui-grid-view mui-grid-9">
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                   <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt="">
-                   </a></li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt=""></a></li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                   <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt="">
-                   </a></li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt=""></a></li>
-                    <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                   <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt="">
-                   </a></li>
-            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-                    <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt=""></a></li>
+            <!--<li v-for="(item, index) in images" :key="index" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+               <img class="preview-img" src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" @click="$preview.open(index, images)">
+            </li>-->
+            <vue-preview :slides="images" @close="handleClose"></vue-preview>
         </ul>
 
         <p class="content" v-html="img.content">
@@ -33,31 +22,62 @@
 </template>
 
 <script>
+    import '../../..//statics/css/style.css';
     //导入评论组件
     import comment from '../subcom/comment.vue';
+    import Vue from 'vue';
+    //导入图片预览的组件
+    import VuePreview from 'vue-preview';
+    // defalut install
+    Vue.use(VuePreview);
+
+    // with parameters install
+//  Vue.use(preview, {
+//    mainClass: 'pswp--minimal--dark',
+//    barsSize: {top: 0, bottom: 0},
+//    captionEl: false,
+//    fullscreenEl: false,
+//    shareEl: false,
+//    bgOpacity: 0.85,
+//    tapToClose: true,
+//    tapToToggleControls: false
+//  });
     
     //导出组件
     export default {
         data() {
             return {
                 img: {},
-                id: -1
+                id: -1,
+                images: []
             }
         },
         created() {
             this.id = this.$route.params.id;
-            
             this.getdetail();
+            this.getimages();
         },
         methods: {
           //获取图片的详细内容
           getdetail() {
-            let id = this.$route.params.id;
-            let url = this.api.apiHost + '/api/getimageInfo/' + id;
+            let url = this.api.apiHost + '/api/getimageInfo/' + this.id;
             this.$http.get(url).then((response) => {
               this.img = response.body.message[0];
             })
+          },
+          //获取9宫格中图片的路径
+          getimages() {
+            let url = this.api.apiHost + '/api/getthumimages/' + this.id;
+            this.$http.get(url).then((response) => {
+              this.images = response.body.message;
     
+              //给数组中的每一个对象增加  w  和 h 属性
+              this.images.forEach((item) => {
+                item.w = 600;
+                item.h = 600;
+                item.msrc = "http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg";
+              })
+            })
           }
         },
         components: {
@@ -79,8 +99,8 @@
         font-size: 13px;
         color: rgba(92, 92, 92, 0.6);
     }
-    /*9宫格样式*/
     
+    /*9宫格样式*/
     .mui-grid-view.mui-grid-9 {
         background-color: #fff;
         border-left: 0px;
@@ -100,4 +120,5 @@
     .mui-grid-view.mui-grid-9 .mui-table-view-cell>a:not(.mui-btn) {
         padding: 0;
     }
+    
 </style>

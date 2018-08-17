@@ -74,8 +74,8 @@
               //给数组中的每一个对象增加  w  和 h 属性
               this.images.forEach((item) => {
                 item.w = 600;
-                item.h = 600;
-                item.msrc = "http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg";
+                item.h = 400;
+                item.msrc = item.src;
               })
             })
           }
@@ -88,7 +88,7 @@
 
 <style scoped>
     .title {
-        margin: 15px 5px;
+        margin: 15px 15px;
     }
     
     .title h4 {
@@ -102,23 +102,13 @@
     
     /*9宫格样式*/
     .mui-grid-view.mui-grid-9 {
+        padding: 15px;
         background-color: #fff;
         border-left: 0px;
     }
     
-    .mui-table-view-cell img {
-        height: 100px;
-    }
-    
-    .mui-grid-view.mui-grid-9 .mui-table-view-cell {
-        border-right: 0px;
-        border-bottom: 0px;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .mui-grid-view.mui-grid-9 .mui-table-view-cell>a:not(.mui-btn) {
-        padding: 0;
+    .content {
+        padding: 15px;
     }
     
 </style>

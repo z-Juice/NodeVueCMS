@@ -15,7 +15,7 @@
                             <span>热卖中</span>
                             <span>剩余{{item.stock_quantity}}件</span>
                         </div>
-                    </div>     
+                    </div>
                 </li>
             </ul> 
     </div>

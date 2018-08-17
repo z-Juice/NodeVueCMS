@@ -15,7 +15,7 @@
             <ul>
                 <li v-for="item in images" :key="item.id">
                     <router-link :to="{name: 'sharedetail', params: {id: item.id}}">
-                        <img src="http://ofv795nmp.bkt.clouddn.com//upload/201504/18/thumb_201504181230434303.jpg" alt="">
+                        <img :src="item.img_url" alt="">
                         <p class="cover">
                             <span>{{item.title}}</span><br>
                             {{item.zhaiyao}}

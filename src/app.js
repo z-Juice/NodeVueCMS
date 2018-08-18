@@ -45,6 +45,8 @@ import share from './components/share/share.vue';
 import sharedetail from './components/share/sharedetail.vue';
 
 import buy from './components/buy/buy.vue';
+import buydetail from './components/buy/buydetail.vue';
+
 import feedback from './components/feedback/feedback.vue';
 import video from './components/video/video.vue';
 import contact from './components/contact/contact.vue';
@@ -64,6 +66,7 @@ let router = new VueRouter({
         {name: 'share', path: '/share', component: share},
         {name: 'sharedetail', path: '/share/:id', component: sharedetail},
         {name: 'buy', path: '/buy', component: buy},
+        {name: 'buydetail', path: '/buy/:id', component: buydetail},
         {name: 'feedback', path: '/feedback', component: feedback},
         {name: 'video', path: '/video', component: video},
         {name: 'contact', path: '/contact', component: contact}

@@ -33,6 +33,8 @@ let webpack = require('webpack');
 let htmlWebpackPlugin = require('html-webpack-plugin');
 let { VueLoaderPlugin } = require('vue-loader');
 //let VueLoaderPlugin = require('vue-loader/lib/plugin');
+//var uglifyjsPlugin=require('uglifyjs-webpack-plugin');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/app.js',
@@ -80,13 +82,37 @@ module.exports = {
             template: 'template.html'
         }),
         new webpack.LoaderOptionsPlugin({
-         options: {
-           babel: {
-                  presets: ['es2015'],
-                  plugins: ['transform-runtime']   //为了转换.vue中的es6的语法
+            options: {
+               babel: {
+                      presets: ['es2015'],
+                      plugins: ['transform-runtime']   //为了转换.vue中的es6的语法
+                }
             }
-         }
-       }),
-       new VueLoaderPlugin()
-    ]
+        }),
+        new VueLoaderPlugin(),
+//      // 压缩js
+//      new webpack.optimize.UglifyJsPlugin({
+//          compress: {
+//              warnings: false
+//          },
+//          comments: false //去掉版权信息等注释
+//      }),
+        // 代码顺序优化
+//      new webpack.optimize.OccurrenceOrderPlugin(),
+        //复制本地文件
+        new CopyWebpackPlugin([
+            {from: 'statics', to:'statics'},
+            // {from: '../jpg'}
+        ])
+    ],
+    //压缩js
+//  optimization: {
+//      minimizer: [
+//          new UglifyJsPlugin({
+//              uglifyOptions: {
+//                  compress: false
+//              }
+//          })
+//      ]
+//  }
 }
